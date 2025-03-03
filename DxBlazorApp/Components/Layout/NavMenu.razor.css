@@ -63,6 +63,10 @@
     background-image: url("images/counter.svg");
 }
 
+::deep .calendar-icon {
+    background-image: url("images/calendar.svg");
+}
+
 ::deep .docs-icon {
     mask-image: url("images/doc.svg");
     -webkit-mask-image: url("images/doc.svg");

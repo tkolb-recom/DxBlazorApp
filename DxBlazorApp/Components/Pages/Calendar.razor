@@ -1,0 +1,40 @@
+@page "/calendar"
+@using DxBlazorApp.Data
+@rendermode InteractiveServer
+@inject CalendarService CalendarService
+
+<PageTitle>Calendar</PageTitle>
+
+<h1>Calendar</h1>
+
+@if (_entries == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <DxGrid Data="@_entries"
+            CssClass="mw-1100">
+        <Columns>
+            <DxGridDataColumn Caption="Mitarbeiter" FieldName="Employee"/>
+            <DxGridDataColumn Caption="Begin" FieldName="Begin"/>
+            <DxGridDataColumn Caption="Ende" FieldName="End"/>
+        </Columns>
+    </DxGrid>
+
+    <div class="counter-block">
+        <div class="counter-content">
+            <section>
+                <label>Beginn: </label>
+                <InputDate @bind-Value="Begin"
+                           DisplayName="Beginn"/>
+            </section>
+            <section>
+                <label>Ende: </label>
+                <InputDate @bind-Value="End"
+                           DisplayName="Ende"/>
+            </section>
+        </div>
+        <DxButton Click="SaveEntry">Speichern</DxButton>
+    </div>
+}
