@@ -1,0 +1,33 @@
+@page "/overview"
+@using DxBlazorApp.Data
+@rendermode InteractiveServer
+@inject CalendarService CalendarService
+
+<PageTitle>Übersicht</PageTitle>
+
+<h1>Übersicht</h1>
+
+@if (DataStorage == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <DxScheduler @bind-StartDate="@StartDate"
+                 DataStorage="@DataStorage"
+                 ActiveViewType="SchedulerViewType.Month"
+                 GroupType="SchedulerGroupType.Resource"
+                 VisibleResourcesDataSource="VisibleResources"
+                 CssClass="demo-sc-size">
+        @* <DxSchedulerDayView DayCount="1"  ShowWorkTimeOnly="true"></DxSchedulerDayView> *@
+        @* <DxSchedulerWeekView ShowWorkTimeOnly="true"></DxSchedulerWeekView> *@
+        @* <DxSchedulerWorkWeekView ShowWorkTimeOnly="true"></DxSchedulerWorkWeekView> *@
+        <DxSchedulerMonthView ShowWorkDaysOnly="false" MonthCount="1"></DxSchedulerMonthView>
+        <DxSchedulerTimelineView Duration="@TimeSpan.FromDays(90)" CellMinWidth="50">
+            <Scales>
+                <DxSchedulerTimeScale Unit="@SchedulerTimeScaleUnit.Month" UnitCount="1"></DxSchedulerTimeScale>
+                <DxSchedulerTimeScale Unit="@SchedulerTimeScaleUnit.Day" UnitCount="1"></DxSchedulerTimeScale>
+            </Scales>
+        </DxSchedulerTimelineView>
+    </DxScheduler>
+}
