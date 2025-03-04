@@ -1,0 +1,36 @@
+.custom-drop-zone {
+    padding: 0 !important;
+    border-style: dashed;
+    border-width: 2px !important;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(183, 183, 183, 0.1);
+}
+.custom-drop-zone.custom-drop-zone-hover {
+    border-style: solid;
+}
+.custom-drop-zone svg {
+    width: 42px;
+    height: 42px;
+}
+.custom-drop-zone > *:not(#overviewDemoSelectButton) {
+    pointer-events: none;
+}
+.drop-file-icon {
+    background-size: contain;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    background-position: center center;
+    background-color: #ADB5BD;
+    width: 48px;
+    height: 48px;
+    -webkit-mask-image: url("images/drop-file.svg");
+    mask-image: url("images/drop-file.svg");
+}
+.drop-file-label {
+    font-weight: 500;
+    font-size: 1rem;
+}
