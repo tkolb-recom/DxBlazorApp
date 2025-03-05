@@ -2,9 +2,9 @@
 @using DxBlazorApp.Data
 @rendermode InteractiveServer
 
-<PageTitle>Calendar</PageTitle>
+<PageTitle>Kalender</PageTitle>
 
-<h1>Calendar</h1>
+<h1>Kalender</h1>
 
 @if (_entries == null)
 {
@@ -21,102 +21,104 @@ else
         </Columns>
     </DxGrid>
 
-    <DxGridLayout>
-        <Rows>
-            <DxGridLayoutRow Height="auto"/>
-            <DxGridLayoutRow Height="auto"/>
-            <DxGridLayoutRow Height="auto"/>
-            <DxGridLayoutRow Height="20px"/>
-            <DxGridLayoutRow Height="auto"/>
-        </Rows>
-        <Columns>
-            <DxGridLayoutColumn Width="auto"/>
-            <DxGridLayoutColumn Width="auto"/>
-        </Columns>
-        <Items>
-            <DxGridLayoutItem Row="0" Column="0">
-                <Template>
-                    <label>Beginn: </label>
-                </Template>
-            </DxGridLayoutItem>
+    <div class="editEntry card rounded-3">
+        <DxGridLayout ColumnSpacing="1em" RowSpacing="5px">
+            <Rows>
+                <DxGridLayoutRow Height="auto"/>
+                <DxGridLayoutRow Height="auto"/>
+                <DxGridLayoutRow Height="auto"/>
+                <DxGridLayoutRow Height="20px"/>
+                <DxGridLayoutRow Height="auto"/>
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="auto"/>
+                <DxGridLayoutColumn Width="auto"/>
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="0">
+                    <Template>
+                        <label>Beginn: </label>
+                    </Template>
+                </DxGridLayoutItem>
 
-            <DxGridLayoutItem Row="0" Column="1">
-                <Template>
-                    <InputDate @bind-Value="Begin"
-                               DisplayName="Beginn"/>
-                </Template>
-            </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="1" CssClass="dateInput">
+                    <Template>
+                        <InputDate @bind-Value="Begin"
+                                   DisplayName="Beginn"/>
+                    </Template>
+                </DxGridLayoutItem>
 
-            <DxGridLayoutItem Row="1" Column="0">
-                <Template>
-                    <label>Ende: </label>
-                </Template>
-            </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="0">
+                    <Template>
+                        <label>Ende: </label>
+                    </Template>
+                </DxGridLayoutItem>
 
-            <DxGridLayoutItem Row="1" Column="1">
-                <Template>
-                    <InputDate @bind-Value="End"
-                               DisplayName="Ende"/>
-                </Template>
-            </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="1" CssClass="dateInput">
+                    <Template>
+                        <InputDate @bind-Value="End"
+                                   DisplayName="Ende"/>
+                    </Template>
+                </DxGridLayoutItem>
 
-            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="2">
-                <Template>
-                    <DxButton Click="SaveEntry">Speichern</DxButton>
-                </Template>
-            </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="2">
+                    <Template>
+                        <DxButton Click="SaveEntry" CssClass="w-100">Speichern</DxButton>
+                    </Template>
+                </DxGridLayoutItem>
 
 
-            <DxGridLayoutItem Row="4" Column="0" ColumnSpan="2">
-                <Template>
-                    <DxButton Click="OpenUploadWindow">Upload</DxButton>
-                </Template>
-            </DxGridLayoutItem>
-        </Items>
-    </DxGridLayout>
+                <DxGridLayoutItem Row="4" Column="0" ColumnSpan="2">
+                    <Template>
+                        <DxButton Click="OpenUploadWindow" CssClass="w-100">Upload</DxButton>
+                    </Template>
+                </DxGridLayoutItem>
+            </Items>
+        </DxGridLayout>
 
-    <DxWindow @ref=_windowRef
-              AllowResize="true"
-              ShowCloseButton="true"
-              CloseOnEscape="true"
-              HeaderText="Upload"
-              FooterText="Footer"
-              ShowFooter="true"
-              Width="max(25vw, 250px)"
-              MinWidth="600"
-              MinHeight="200"
-              MaxWidth="800"
-              MaxHeight="500"
-              @bind-Visible=_windowVisible>
-        <BodyContentTemplate>
-            <div class="upload-content pt-1 pb-2 w-100">
-                <div id="overviewDemoDropZone" class="card custom-drop-zone rounded-3 w-100 m-0">
-                    <span class="drop-file-icon mb-3"></span>
-                    <span class="drop-file-label">Ziehe eine Datei hierein</span>
-                    <span class="m-1">oder</span>
-                    <DxButton Id="overviewDemoSelectButton"
-                              CssClass="m-1"
-                              RenderStyle="ButtonRenderStyle.Primary"
-                              Text="Wähle eine Datei"/>
+        <DxWindow @ref=_windowRef
+                  AllowResize="true"
+                  ShowCloseButton="true"
+                  CloseOnEscape="true"
+                  HeaderText="Upload"
+                  FooterText="Footer"
+                  ShowFooter="true"
+                  Width="max(25vw, 250px)"
+                  MinWidth="600"
+                  MinHeight="200"
+                  MaxWidth="800"
+                  MaxHeight="500"
+                  @bind-Visible=_windowVisible>
+            <BodyContentTemplate>
+                <div class="upload-content pt-1 pb-2 w-100">
+                    <div id="overviewDemoDropZone" class="card custom-drop-zone rounded-3 w-100 m-0">
+                        <span class="drop-file-icon mb-3"></span>
+                        <span class="drop-file-label">Ziehe eine Datei hierein</span>
+                        <span class="m-1">oder</span>
+                        <DxButton Id="overviewDemoSelectButton"
+                                  CssClass="m-1"
+                                  RenderStyle="ButtonRenderStyle.Primary"
+                                  Text="Wähle eine Datei"/>
+                    </div>
+                    <DxFileInput
+                        Visible="@UploadVisible"
+                        ExternalSelectButtonCssSelector="#overviewDemoSelectButton"
+                        ExternalDropZoneCssSelector="#overviewDemoDropZone"
+                        ExternalDropZoneDragOverCssClass="custom-drop-zone-hover"
+                        MaxFileSize="1000000"
+                        FilesUploading="OnFilesUploading"
+                        SelectedFilesChanged="@SelectedFilesChanged"
+                        ShowSelectButton="false"
+                        AllowedFileExtensions="@(new List<string> { ".ics" })">
+                    </DxFileInput>
                 </div>
-                <DxFileInput
-                    Visible="@UploadVisible"
-                    ExternalSelectButtonCssSelector="#overviewDemoSelectButton"
-                    ExternalDropZoneCssSelector="#overviewDemoDropZone"
-                    ExternalDropZoneDragOverCssClass="custom-drop-zone-hover"
-                    MaxFileSize="1000000"
-                    FilesUploading="OnFilesUploading"
-                    SelectedFilesChanged="@SelectedFilesChanged"
-                    ShowSelectButton="false"
-                    AllowedFileExtensions="@(new List<string> { ".ics" })">
-                </DxFileInput>
-            </div>
-        </BodyContentTemplate>
-        <FooterContentTemplate>
-            <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Primary" Text="OK"
-                      Click="@context.CloseCallback"/>
-            <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Secondary" Text="Abbruch"
-                      Click="@context.CloseCallback"/>
-        </FooterContentTemplate>
-    </DxWindow>
+            </BodyContentTemplate>
+            <FooterContentTemplate>
+                <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Primary" Text="OK"
+                          Click="@context.CloseCallback"/>
+                <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Secondary" Text="Abbruch"
+                          Click="@context.CloseCallback"/>
+            </FooterContentTemplate>
+        </DxWindow>
+    </div>
 }
