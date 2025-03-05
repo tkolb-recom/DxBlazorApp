@@ -10,9 +10,8 @@ public partial class Calendar : ComponentBase
 
     private CalendarEntry[]? _entries = null;
 
-    private DxWindow windowRef;
-    ElementReference popupTarget;
-    bool windowVisible;
+    private DxWindow _windowRef;
+    bool _windowVisible;
 
     public DateTime Begin { get; set; } = DateTime.Today;
     public DateTime End { get; set; } = DateTime.Today.AddDays(1);
@@ -35,10 +34,10 @@ public partial class Calendar : ComponentBase
 
     private void OpenUploadWindow()
     {
-        if (windowVisible)
-            windowRef.CloseAsync();
+        if (_windowVisible)
+            _windowRef.CloseAsync();
         else
-            windowRef.ShowAtAsync(popupTarget);
+            _windowRef.ShowAsync();
     }
 
 
@@ -53,7 +52,22 @@ public partial class Calendar : ComponentBase
     protected async Task OnFilesUploading(FilesUploadingEventArgs args)
     {
         var file = args.Files[0];
-        using var stream = new System.IO.MemoryStream();
-        await file.OpenReadStream(file.Size).CopyToAsync(stream);
+
+        await ImportCalendar(file);
+    }
+
+    private static async Task ImportCalendar(IFileInputSelectedFile file)
+    {
+        try
+        {
+            using var stream = new System.IO.MemoryStream();
+            await file.OpenReadStream(file.Size).CopyToAsync(stream);
+
+            stream.Seek(0, System.IO.SeekOrigin.Begin);
+            Ical.Net.Calendar calendar = Ical.Net.Calendar.Load(stream);
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

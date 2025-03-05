@@ -62,20 +62,20 @@ else
 
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="2">
                 <Template>
-                    <DxButton Click="SaveEntry" >Speichern</DxButton>
+                    <DxButton Click="SaveEntry">Speichern</DxButton>
                 </Template>
             </DxGridLayoutItem>
 
 
             <DxGridLayoutItem Row="4" Column="0" ColumnSpan="2">
                 <Template>
-                    <DxButton Click="OpenUploadWindow" >Upload</DxButton>
+                    <DxButton Click="OpenUploadWindow">Upload</DxButton>
                 </Template>
             </DxGridLayoutItem>
         </Items>
     </DxGridLayout>
 
-    <DxWindow @ref=windowRef
+    <DxWindow @ref=_windowRef
               AllowResize="true"
               ShowCloseButton="true"
               CloseOnEscape="true"
@@ -83,22 +83,21 @@ else
               FooterText="Footer"
               ShowFooter="true"
               Width="max(25vw, 250px)"
-              MinWidth="300"
+              MinWidth="600"
               MinHeight="200"
               MaxWidth="800"
               MaxHeight="500"
-              @bind-Visible=windowVisible>
+              @bind-Visible=_windowVisible>
         <BodyContentTemplate>
-            <div class="d-flex flex-fill pt-1 pb-2 w-100">
+            <div class="upload-content pt-1 pb-2 w-100">
                 <div id="overviewDemoDropZone" class="card custom-drop-zone rounded-3 w-100 m-0">
                     <span class="drop-file-icon mb-3"></span>
-                    <span class="drop-file-label" >Ziehe eine Datei hierein</span>
+                    <span class="drop-file-label">Ziehe eine Datei hierein</span>
                     <span class="m-1">oder</span>
                     <DxButton Id="overviewDemoSelectButton"
                               CssClass="m-1"
                               RenderStyle="ButtonRenderStyle.Primary"
-                              Text="Wähle Datei"
-                              />
+                              Text="Wähle eine Datei"/>
                 </div>
                 <DxFileInput
                     Visible="@UploadVisible"
@@ -114,8 +113,10 @@ else
             </div>
         </BodyContentTemplate>
         <FooterContentTemplate>
-            <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Primary" Text="OK" Click="@context.CloseCallback" />
-            <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@context.CloseCallback" />
+            <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Primary" Text="OK"
+                      Click="@context.CloseCallback"/>
+            <DxButton CssClass="popup-button my-1 ms-2" RenderStyle="ButtonRenderStyle.Secondary" Text="Abbruch"
+                      Click="@context.CloseCallback"/>
         </FooterContentTemplate>
     </DxWindow>
 }

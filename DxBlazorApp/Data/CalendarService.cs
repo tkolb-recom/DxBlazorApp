@@ -4,7 +4,7 @@ namespace DxBlazorApp.Data;
 
 public class CalendarService
 {
-    List<CalendarEntry>? _calendarEntries = new();
+    List<CalendarEntry> _calendarEntries = new();
 
     public Task<CalendarEntry[]> GetEntriesAsync(DateOnly startDate)
     {
@@ -13,7 +13,11 @@ public class CalendarService
         if (File.Exists("calendar.xml"))
         {
             using var stream = new FileStream("calendar.xml", FileMode.Open);
-            _calendarEntries = serializer.Deserialize(stream) as List<CalendarEntry>;
+            if (serializer.Deserialize(stream) is List<CalendarEntry> loaded)
+            {
+                _calendarEntries.Clear();
+                _calendarEntries.AddRange(loaded);
+            }
         }
 
         return Task.FromResult(_calendarEntries.ToArray());

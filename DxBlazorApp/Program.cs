@@ -13,6 +13,7 @@ builder.Services.AddDevExpressBlazor(options =>
                                          options.BootstrapVersion = DevExpress.Blazor.BootstrapVersion.v5;
                                          options.SizeMode = DevExpress.Blazor.SizeMode.Medium;
                                      });
+builder.Services.AddMvc();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<CalendarService>();
 var app = builder.Build();
